@@ -1,3 +1,4 @@
+#
 require "./drink"
 require "./category"
 # require "./vending_machine.rb"
@@ -12,7 +13,7 @@ class VendingMachine
 
   # 初期設定
   # 初期設定はもう少しシンプルに
-  
+
   def initialize
     @total = 0
     @sale_amount = 0
