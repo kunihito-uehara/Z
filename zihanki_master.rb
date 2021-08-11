@@ -38,6 +38,9 @@ class VendingMachine
     @stocks = []
     @drinks = []
     5.times {@drinks.push(Drink.cola)}
+    c = Category.new(@drinks)
+    @stocks.push(c) if c.validate_class && c.validate_unique
+    @unsdn = []
   end
   def total
     puts "現在の投入金額合計は#{@total}円ですよ！"
@@ -53,10 +56,21 @@ class VendingMachine
     puts "#{@total}円返却"
     @total = 0
   end
+  def store(drink, num)
+    stocks_delete
+    @unsdn.clear
+    @drinks = []
+    num.times { @drinks.push(drink) }
+    c = Category.new(@drinks)
+    @stocks.push(c) if c.validate_class && c.validate_unique
+  end
+  def stocks_delete
+    @stocks.delete_if { |n| n.drinks.empty? }
+  end
   def stock_info
     @new_stocks = []
     @stocks.each do |stock|
-    @new_stocks << stock unless stock.drinks.empty?
+      @new_stocks << stock unless stock.drinks.empty?
     end
     unless @new_stocks.empty?
       @new_stocks.each_with_index do |stock, idx|
@@ -111,6 +125,6 @@ class VendingMachine
     end
   end
   def sale_amount
-    puts "現在の売り上げは#{sale_amount}円です！"
+    puts "現在の売り上げは#{@sale_amount}円です！"
   end
 end
