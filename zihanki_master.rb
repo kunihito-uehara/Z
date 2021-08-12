@@ -71,10 +71,14 @@ class VendingMachine
     @new_stocks = []
     @stocks.each do |stock|
       @new_stocks << stock unless stock.drinks.empty?
+      p "a:"
+      p @new_stocks
     end
     unless @new_stocks.empty?
       @new_stocks.each_with_index do |stock, idx|
         drink = stock.drinks.first
+        p "b:"
+        p drink
         puts "名前:#{drink.name} \n 値段:#{drink.price} \n 在庫:#{stock_count(drink.name, idx)}"
       end
     else
@@ -99,7 +103,11 @@ class VendingMachine
     puts "-----------------------------------------"
     unless @stocks.empty?
       @stocks.each_with_index do |stock, idx|
+        p "c:"
+        p stock
         drink = stock.drinks.first
+        p "d:"
+        p drink
         unstock_drink(drink.name) unless stock.drinks.empty?
         puts "[#{idx}]:#{drink.name} #{drink.price}円" unless stock.drinks.empty?
         puts "[#{idx}]:#{@unsdn[idx]}は、ただいま品切れ中です。" if stock.drinks.empty?
@@ -128,3 +136,7 @@ class VendingMachine
     puts "現在の売り上げは#{@sale_amount}円です！"
   end
 end
+
+vm = VendingMachine.new
+vm.insert(1000)
+vm.stock_info
